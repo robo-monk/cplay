@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 
 /*
   fib(5) -> f3 + fib(4, f3)
@@ -30,11 +31,24 @@ int fib(int n) {
 }
 
 
+void bench_end(float start, char* title) {
+  float end_time = (float) clock() / CLOCKS_PER_SEC;
+  float time_elapsed = end_time - start;
+
+  printf("Bench: %s -> %f \n\n", title, time_elapsed);
+}
+
 int main(void) {
-  printf("Hello mother fuckers what's up");
+  // printf("Hello mother fuckers what's up");
   const int i = 42;
+
+  float start_time = (float) clock() / CLOCKS_PER_SEC;
   const int a = fib(i);
-  const int b = fib(i);
+  bench_end(start_time, "slow fib");
+
+  start_time = (float) clock() / CLOCKS_PER_SEC;
+  const int b = fib2(i);
+  bench_end(start_time, "fast fib");
   
   printf("fib(%u) -> %u | %u", i, a, b);
 }
